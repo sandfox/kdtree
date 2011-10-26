@@ -115,7 +115,7 @@ class KDTree
 			
 			$tempDistance = self::euclidianDistance($tempSearchPoint, $originPoint);
 			if($tempDistance <= $results->getLastResultDistance()) {
-				
+				self::nearestNeighbour($oppositeNode, $originPoint, $depth + 1, $results);
 			}
 		}
 		
@@ -132,7 +132,7 @@ class KDTree
 	static public function euclidianDistance(Point $pointA, Point $pointB)
 	{
 		//Lets assume they have the same number of dimensions
-		$numDimensions = count($pointA[0]);
+		$numDimensions = $pointA->getNumDimensions();
 		
 		$total = 0;
 		for ($i = 0; $i < $numDimensions; $i++) {
