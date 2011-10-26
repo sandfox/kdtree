@@ -20,9 +20,7 @@ class SearchResults {
 	public function insertResult($node, $distance)
 	{
 		$currentLastResultIndex = count($this->_results) - 1;
-		
 		for($i = $currentLastResultIndex; $i >= 0; $i--) {
-			echo "looking at result $i\n";
 			
 			$insertPoint = $i;
 			if($distance > $this->_results[$i]['distance']) {
@@ -31,7 +29,7 @@ class SearchResults {
 			}
 		}
 		
-		echo "inserting $distance at $insertPoint \n";
+		//echo "inserting $distance at $insertPoint \n";
 		
 		$insert = array(
 					'distance' => $distance,

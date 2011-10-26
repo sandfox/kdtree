@@ -13,7 +13,7 @@ $points = array();
 
 $factor = 2;
 $dimensions = 2;
-$numPoints = 20000;
+$numPoints = 60000;
 $max = $numPoints * $factor;
 $min = -$max;
 
@@ -32,46 +32,28 @@ for($i = 0; $i < $numPoints; $i++) {
 }
 
 
-/*
-$point = new \KDTree\Point();
-$point[] = 10;
-$point[] = 10;
-$points[] = $point;
-
-$point = new \KDTree\Point();
-$point[] = 20;
-$point[] = 20;
-$points[] = $point;
-
-$point = new \KDTree\Point();
-$point[] = 30;
-$point[] = 30;
-$points[] = $point;
-
-$point = new \KDTree\Point();
-$point[] = 40;
-$point[] = 40;
-$points[] = $point;
-*/
-
-echo "Building Tree";
-$startTime = microtime();
+echo "Building Tree\n";
+$startTime = microtime(true);
 
 $myTree = KDTree\KDTree::build($points);
 
-$stopTime - microtime();
-echo "Finished building tree in ".$stopTime - $startTime." microseconds";
+$stopTime = microtime(true);
+echo "Finished building tree in ".($stopTime - $startTime)." seconds\n\n";
 
 $originPoint = new \KDTree\Point();
 
 $originPoint[] = 50;
 $originPoint[] = 20;
 
-$results = new \KDTree\SearchResults(5);
+$results = new \KDTree\SearchResults(1);
 
-$depth = 0;
+echo "Finding nearest X nodes\n";
+$startTime = microtime(true);
 
-$result = KDTree\KDTree::nearestNeighbour($myTree, $originPoint, $depth, $results);
+$result = KDTree\KDTree::nearestNeighbour($myTree, $originPoint, $results);
+
+$stopTime = microtime(true);
+echo "Finished search ".($stopTime - $startTime)." seconds\n\n";
 
 $nearest = $results->getNearestNode();
 

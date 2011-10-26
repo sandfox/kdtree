@@ -65,7 +65,7 @@ class KDTree
 		
 	}
 	
-	static public function nearestNeighbour(Node $node, Point $originPoint, $depth, SearchResults $results)
+	static public function nearestNeighbour(Node $node, Point $originPoint, SearchResults $results, $depth = 0)
 	{
 		$numDimensions = count($originPoint);
 		
@@ -92,7 +92,7 @@ class KDTree
 		}
 		
 		if($targetNode) {
-			self::nearestNeighbour($targetNode, $originPoint, $depth + 1, $results);
+			self::nearestNeighbour($targetNode, $originPoint, $results, $depth + 1);
 		}
 		
 		if($oppositeNode) {
@@ -115,7 +115,7 @@ class KDTree
 			
 			$tempDistance = self::euclidianDistance($tempSearchPoint, $originPoint);
 			if($tempDistance <= $results->getLastResultDistance()) {
-				self::nearestNeighbour($oppositeNode, $originPoint, $depth + 1, $results);
+				self::nearestNeighbour($oppositeNode, $originPoint, $results, $depth + 1);
 			}
 		}
 		
