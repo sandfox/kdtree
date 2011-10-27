@@ -19,6 +19,7 @@ class SearchResults {
 	
 	public function insertResult($node, $distance)
 	{
+		$insertPoint = 0;
 		$currentLastResultIndex = count($this->_results) - 1;
 		for($i = $currentLastResultIndex; $i >= 0; $i--) {
 			

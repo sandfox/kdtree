@@ -7,45 +7,54 @@ include 'src/KDTree/HyperRectangle.php';
 include 'src/KDTree/Point.php';
 include 'src/KDTree/SearchResults.php';
 
-
-$points = array();
-
-
-$factor = 2;
-$dimensions = 2;
-$numPoints = 60000;
-$max = $numPoints * $factor;
-$min = -$max;
+include 'libs.php';
 
 
-for($i = 0; $i < $numPoints; $i++) {
+$yFactor = 3;
+$numDimensions = 2;
+$totalPoints = 60000;
+
+echo "Getting cached tree\n";
+$cacheFindStartTime = microtime(true);
+$myTree = getCachedTree();
+
+if($myTree === null) {
+	echo "No cached tree found\n";
 	
-	$point = new KDTree\Point;
+
+	$points = generatePoints($totalPoints, $numDimensions, $yFactor);
+
+	echo "Building tree\n";
+	$startTime = microtime(true);
+
+	$myTree = KDTree\KDTree::build($points);
+
+	$stopTime = microtime(true);
+	echo "Finished building tree in ".($stopTime - $startTime)." seconds\n\n";
 	
-	for($n = 0; $n < $dimensions; $n++) {
-		$point[$n] = mt_rand($min, $max);
-	}
+	echo "Caching tree\n";
+	$cacheWriteStartTime = microtime(true);
+	cacheTree($myTree);
+	$cacheWriteStopTime = microtime(true);
+	echo "Finished caching tree in ".($cacheWriteStopTime - $cacheWriteStartTime)." seconds\n";
 	
-	$points[] = $point;
-	$max = $max - ($factor);
-	$min = -$max;
+} else {
+	$cacheFindStopTime = microtime(true);
+	echo "Cache unserialized in ".($cacheFindStopTime - $cacheFindStartTime)." seconds\n";
 }
 
 
-echo "Building Tree\n";
-$startTime = microtime(true);
 
-$myTree = KDTree\KDTree::build($points);
-
-$stopTime = microtime(true);
-echo "Finished building tree in ".($stopTime - $startTime)." seconds\n\n";
-
-$originPoint = new \KDTree\Point();
+$originPoint = new KDTree\Point();
 
 $originPoint[] = 50;
 $originPoint[] = 20;
+$originPoint[] = 30;
 
-$results = new \KDTree\SearchResults(1);
+
+
+
+$results = new KDTree\SearchResults(1);
 
 echo "Finding nearest X nodes\n";
 $startTime = microtime(true);
