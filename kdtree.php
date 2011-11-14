@@ -54,7 +54,7 @@ $originPoint[] = 30;
 
 
 
-$results = new KDTree\SearchResults(1);
+$results = new KDTree\SearchResults(3500);
 
 echo "Finding nearest X nodes\n";
 $startTime = microtime(true);
@@ -67,3 +67,5 @@ echo "Finished search ".($stopTime - $startTime)." seconds\n\n";
 $nearest = $results->getNearestNode();
 
 var_dump($nearest['node']->point, $nearest['distance']);
+
+var_dump($results->countResults());

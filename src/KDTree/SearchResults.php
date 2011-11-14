@@ -72,6 +72,11 @@ class SearchResults {
 		return $results;
 	}
 	
+	public function countResults()
+	{
+		return count($this->_results);
+	}
+	
 	protected function _debugDistances()
 	{
 		var_dump($this->getResultDistances());
