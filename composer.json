@@ -1,6 +1,11 @@
 {
     "name": "sandfox/kdtree",
     "description": "A slow and possibly buggy implementation of a kdtree in php",
+    "support": {
+        "issues" : "https://github.com/sandfox/KDTree/issues"
+    },
+    "license": "MIT",
+    "type": "library",
     "require" : {
         "php" : ">5.4.0"
     },
@@ -10,7 +15,8 @@
     "authors": [
         {
             "name": "James Butler",
-            "email": "james.butler@sandfox.co.uk"
+            "email": "james.butler@sandfox.co.uk",
+            "homepage" : "http://blog.sandfox.co.uk"
         }
     ],
     "autoload" : {
