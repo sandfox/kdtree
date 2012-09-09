@@ -2,7 +2,7 @@
     "name": "sandfox/kdtree",
     "description": "A slow and possibly buggy implementation of a kdtree in php",
     "support": {
-        "issues" : "https://github.com/sandfox/KDTree/issues"
+        "issues" : "https://github.com/sandfox/kdtree/issues"
     },
     "license": "MIT",
     "type": "library",
