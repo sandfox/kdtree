@@ -1,7 +1,7 @@
 <?php
 
 
-namespace KDTree;
+namespace Sandfox\KDTree;
 
 /**
  * Description of HyperRectangle
@@ -9,26 +9,26 @@ namespace KDTree;
  * Each key represents a plan and should take an array of 'min', 'max'
  * FIXME - should the compenents of a hyper rectangle be represented by a plane or something else?
  *
- * @author grapple
+ * @author sandfox
  */
 class HyperRectangle implements \ArrayAccess
 {
-	protected $_axis = array();
+	protected $axis = array();
 	
 	public function offsetSet($offset, $value) {
         if (is_null($offset)) {
-            $this->_axis[] = $value;
+            $this->axis[] = $value;
         } else {
-            $this->_axis[$offset] = $value;
+            $this->axis[$offset] = $value;
         }
     }
     public function offsetExists($offset) {
-        return isset($this->_axis[$offset]);
+        return isset($this->axis[$offset]);
     }
     public function offsetUnset($offset) {
-        unset($this->_axis[$offset]);
+        unset($this->axis[$offset]);
     }
     public function offsetGet($offset) {
-        return isset($this->_axis[$offset]) ? $this->_axis[$offset] : null;
+        return isset($this->axis[$offset]) ? $this->axis[$offset] : null;
     }
 }
