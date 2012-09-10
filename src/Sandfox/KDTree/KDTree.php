@@ -10,10 +10,10 @@ namespace Sandfox\KDTree;
 class KDTree
 {
 	/**
-	 * [build description]
-	 * @param  array   $points [description]
-	 * @param  integer $depth  [description]
-	 * @return [type]          [description]
+	 * Creates a KDTree (or more accurately a node with children)
+	 * @param  array   $points The points the tree is to be built from
+	 * @param  integer $depth  Used by this function recursively, don't set yourself
+	 * @return Sandfox\KDTree\Node          [description]
 	 */
 	static public function build(array $points, $depth = 0)
 	{
@@ -44,7 +44,7 @@ class KDTree
 
 			$numPointsInDimension = count($coords);
 
-			$node->hyperRectangle[$i]= array(
+			$node->getHyperRectangle()[$i]= array(
 				'min' => $coords[0],
 				'max' => $coords[$numPointsInDimension - 1]
 				);
@@ -139,10 +139,10 @@ class KDTree
 	}
 
 	/**
-	 *
-	 * @param array $pointA
-	 * @param array $pointB
-	 * @return type
+	 * Calculate the distance between 2 points assuming euclidean geometry applies
+	 * @param  Point  $pointA The first point in the comparison
+	 * @param  Point  $pointB The second point in the comparison
+	 * @return float         The distance between the two points
 	 */
 	static public function euclidianDistance(Point $pointA, Point $pointB)
 	{

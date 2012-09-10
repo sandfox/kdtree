@@ -13,31 +13,31 @@ class Node
 {
 	/**
 	 * The right child
-	 * @var [type]
+	 * @var Node
 	 */
 	protected $rightChild;
 
 	/**
 	 * The left child
-	 * @var [type]
+	 * @var Node
 	 */
 	protected $leftChild;
 
 	/**
 	 * The hyper rectangle
-	 * @var [type]
+	 * @var HyperRectangle
 	 */
 	protected $hyperRectangle;
 
 	/**
 	 * The actual point
 	 * 
-	 * @var [type]
+	 * @var Point
 	 */
 	protected $point;
 
 	/**
-	 * [__construct description]
+	 * 
 	 */
 	public function __construct()
 	{
