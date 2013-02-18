@@ -3,7 +3,10 @@
 namespace Sandfox\KDTree;
 
 /**
- * Description of SearchResults
+ * A (loosely) bounded priority queue for search results
+ * Nearest node is at bottom of heap
+ * Is iterable and throw out furthest node first
+ * 'data' is the node, 'priority' is the distance
  *
  * @author sandfox
  */
@@ -11,14 +14,14 @@ class SearchResults extends \SplPriorityQueue
 {
 
 	/**
-	 * [$maxResults description]
+	 * Max size for the queue
 	 * @var [type]
 	 */
 	protected $maxResults;
 
 	/**
 	 * [__construct description]
-	 * @param integer $maxResults [description]
+	 * @param integer $maxResults the maximum number of results the queue should hold
 	 */
 	public function __construct($maxResults = 1)
 	{
@@ -34,11 +37,11 @@ class SearchResults extends \SplPriorityQueue
 
 	/**
 	 * [insertResult description]
-	 * @param  [type] $node     [description]
+	 * @param  Node $node     [description]
 	 * @param  [type] $distance [description]
-	 * @return [type]           [description]
+	 * @return  null           [description]
 	 */
-	public function insertResult($node, $distance)
+	public function insertResult(Node $node, $distance)
 	{
 		$this->insert($node, $distance);
 
@@ -56,7 +59,7 @@ class SearchResults extends \SplPriorityQueue
 	}
 
 	/**
-	 * This requires emptying the queue
+	 * NOTE - This requires emptying the queue
 	 * @return [type] [description]
 	 */
 	public function getNearestNode()
@@ -69,7 +72,7 @@ class SearchResults extends \SplPriorityQueue
 	}
 
 	/**
-	 * [countResults description]
+	 * Here for legacy reasons - depreciate me
 	 * @return [type] [description]
 	 */
 	public function countResults()
