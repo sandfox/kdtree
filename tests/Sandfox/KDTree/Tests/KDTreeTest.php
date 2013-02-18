@@ -9,7 +9,6 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 
 
 	protected $pointsData = [
-		[0,0,0],
 		[1,1,1],
 		[2,2,2],
 		[3,3,3],
@@ -50,19 +49,33 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testSearchNearestNeighbour($tree)
 	{
-		$originPoint = new KDTree\Point;
+		$highPoint = new KDTree\Point;
 
-		$originPoint[] = 6;
-		$originPoint[] = 6;
-		$originPoint[] = 6;
+		$highPoint[] = 6;
+		$highPoint[] = 6;
+		$highPoint[] = 6;
 
-		$results = new KDTree\SearchResults(count($this->pointsData));
+		$highResults = new KDTree\SearchResults(count($this->pointsData));
 
-		KDTree\KDTree::nearestNeighbour($tree, $originPoint, $results);
+		KDTree\KDTree::nearestNeighbour($tree, $highPoint, $highResults);
 
-		$nearest = $results->getNearestNode();
+		$highNearest = $highResults->showNearestNode();
 
-		$this->assertEquals($nearest['node']->getPoint(), $this->points[5]);
+		$this->assertEquals($highNearest['data']->getPoint(), $this->points[4]);
+
+		$lowPoint = new KDTree\Point;
+
+		$lowPoint[] = -1;
+		$lowPoint[] = -1;
+		$lowPoint[] = -1;
+
+		$lowResults = new KDTree\SearchResults(count($this->pointsData));
+
+		KDTree\KDTree::nearestNeighbour($tree, $lowPoint, $lowResults);
+
+		$lowNearest = $lowResults->showNearestNode();
+
+		$this->assertEquals($lowNearest['data']->getPoint(), $this->points[0]);
 
 	}
 }
