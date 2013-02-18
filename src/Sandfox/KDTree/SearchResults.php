@@ -26,9 +26,10 @@ class SearchResults extends \SplPriorityQueue
 		$this->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
 	}
 
+	//closest item is at bottom of queue
 	public function compare($distanceA, $distanceB)
 	{
-		return $distanceB - $distanceA;
+		return $distanceA - $distanceB;
 	}
 
 	/**
@@ -40,24 +41,31 @@ class SearchResults extends \SplPriorityQueue
 	public function insertResult($node, $distance)
 	{
 		$this->insert($node, $distance);
+
+		if($this->count() > $this->maxResults) {
+			$this->extract();
+		}
 	}
 
 	/**
-	 * [getLastResultDistance description]
+	 * Returns the distance of the top (farthest) node in the heap
 	 * @return [type] [description]
 	 */
 	public function getLastResultDistance() {
-		$currentLastResultIndex = count($this->results) - 1;
-		return $this->results[$currentLastResultIndex]['distance'];
+		return $this->top()['priority'];
 	}
 
 	/**
-	 * [getNearestNode description]
+	 * This requires emptying the queue
 	 * @return [type] [description]
 	 */
-	public function showNearestNode()
+	public function getNearestNode()
 	{
-		return $this->top();
+		while($this->valid()){
+			$retval = $this->extract();
+		};
+
+		return $retval;
 	}
 
 	/**
