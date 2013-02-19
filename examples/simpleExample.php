@@ -10,8 +10,8 @@ $tree = new Sandfox\KDTree\Point();
 
 
 $yFactor = 3;
-$numDimensions = 2;
-$totalPoints = 60;
+$numDimensions = 4;
+$totalPoints = 100000;
 
 echo "Getting cached tree\n";
 $cacheFindStartTime = microtime(true);
@@ -47,13 +47,13 @@ if($myTree === null) {
 $originPoint = new KDTree\Point();
 
 $originPoint[] = 0;
-$originPoint[] = 0;
-$originPoint[] = 0;
+$originPoint[] = 30;
+//$originPoint[] = -1;
 
 
 
 
-$results = new KDTree\SearchResults(3500);
+$results = new KDTree\SearchResults(5000);
 
 echo "Finding nearest X nodes\n";
 $startTime = microtime(true);
@@ -63,8 +63,10 @@ $result = KDTree\KDTree::nearestNeighbour($myTree, $originPoint, $results);
 $stopTime = microtime(true);
 echo "Finished search ".($stopTime - $startTime)." seconds\n\n";
 
+var_dump($results->countResults());
+
 $nearest = $results->getNearestNode();
 
-var_dump($nearest['node']->getPoint(), $nearest['distance']);
+var_dump($nearest['data']->getPoint(), $nearest['priority']);
 
-var_dump($results->countResults());
+

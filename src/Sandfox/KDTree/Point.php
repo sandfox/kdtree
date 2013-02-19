@@ -3,7 +3,7 @@
 namespace Sandfox\KDTree;
 
 /**
- * Description of Location
+ * Description of Point
  *
  * @author sandfox
  */
