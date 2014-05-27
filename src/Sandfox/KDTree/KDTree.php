@@ -119,10 +119,12 @@ class KDTree
 				if($i == $axis) {
 					$tempSearchPoint[$i] = $node->getPoint()[$i];
 				} else {
-					if($originPoint[$i] < $oppositeNode->getHyperRectangle()[$i]['min']) {
+					if($originPoint[$i] <= $oppositeNode->getHyperRectangle()[$i]['min']) {
 						$tempSearchPoint[$i] = $oppositeNode->getHyperRectangle()[$i]['min'];
 					}
 					elseif($originPoint[$i] < $oppositeNode->getHyperRectangle()[$i]['max']) {
+						$tempSearchPoint[$i] = $originPoint[$i];
+					} else {
 						$tempSearchPoint[$i] = $oppositeNode->getHyperRectangle()[$i]['max'];
 					}
 				}
