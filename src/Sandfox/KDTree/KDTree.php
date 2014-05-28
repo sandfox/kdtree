@@ -53,17 +53,16 @@ class KDTree
 
 		array_multisort($sortCoords, SORT_ASC, $points);
 
-		$pointcount = count($points);
-		$median = $pointcount / 2; // bitshift for fast division
-		while($median < $pointcount - 1 && $sortCoords[$median] == $sortCoords[$median + 1]) {
-			$median++;
+		$median = floor(count($points) / 2); // bitshift for fast division
+		while($median > 0 && $sortCoords[$median] == $sortCoords[$median - 1]) {
+			$median--;
 		}
 
 		$node->setPoint($points[$median]);
 
 
 		//lets split the array in half
-		$leftArray = array_slice($points, 0, $median -1);
+		$leftArray = array_slice($points, 0, $median);
 		$rightArray= array_slice($points, $median +1, null);
 
 		$node->setLeftChild(self::build($leftArray, $depth+1));
