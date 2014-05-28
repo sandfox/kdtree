@@ -53,10 +53,11 @@ class KDTree
 
 		array_multisort($sortCoords, SORT_ASC, $points);
 
-
-
-		$median = count($points) / 2;
-
+		$pointcount = count($points);
+		$median = $pointcount / 2; // bitshift for fast division
+		while($median < $pointcount - 1 && $sortCoords[$median] == $sortCoords[$median + 1]) {
+			$median++;
+		}
 
 		$node->setPoint($points[$median]);
 
@@ -82,7 +83,7 @@ class KDTree
 	 */
 	static public function nearestNeighbour(Node $node, Point $originPoint, SearchResults $results, $depth = 0)
 	{
-		$numDimensions = count($originPoint);
+		$numDimensions = $originPoint->getNumDimensions();
 
 		$axis = $depth % $numDimensions;
 
