@@ -15,8 +15,11 @@ class KDTree
 	 * @param  integer $depth  Used by this function recursively, don't set yourself
 	 * @return Sandfox\KDTree\Node          [description]
 	 */
-	static public function build(array $points, $depth = 0)
+	static public function build(array $points, $depth = 0, $maxdepth = 1000)
 	{
+		if($depth > $maxdepth) {
+			throw new OverflowException("Depth exceeded maximum of " + $maxdepth + ". Check for exact duplicate points, which cause infinite recursion, or specify the optional maxdepth argument.");
+		}
 
 		//Can't build add a node with no points
 		if(empty($points)) {
@@ -68,8 +71,8 @@ class KDTree
 		$leftArray = array_slice($points, 0, $median);
 		$rightArray= array_slice($points, $median +1, null);
 
-		$node->setLeftChild(self::build($leftArray, $depth+1));
-		$node->setRightChild(self::build($rightArray, $depth+1));
+		$node->setLeftChild(self::build($leftArray, $depth+1, $maxdepth));
+		$node->setRightChild(self::build($rightArray, $depth+1, $maxdepth));
 
 		return $node;
 

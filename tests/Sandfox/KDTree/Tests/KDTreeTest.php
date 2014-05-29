@@ -166,4 +166,13 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($this->points[$expectedIndex], $results->getNearestNode()['data']->getPoint());
 	}
 
+	public function testDepthGreaterThanMaxDepthThrowsException() {
+		try {
+			KDTree\KDTree::build([1], 501, 500);
+			$this->fail("no exception thrown");
+		} catch(OverflowException $e) {
+			$this->assertEquals("Depth exceeded maximum of 500. Check for exact duplicate points, which cause infinite recursion, or specify the optional maxdepth argument.", $e->getMessage());
+		}
+	}
+
 }
