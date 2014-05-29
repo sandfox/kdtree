@@ -31,9 +31,12 @@ class KDTree
 
 		//ugly but high perfomance array sort - usort is cleaner for small number of points
 		for($i = 0; $i < $numDimensions; $i++) {
+			$min = null; $max = null;
 
 			$coords = array();
 			foreach ($points as $point) {
+				if($min === null || $point[$i] < $min) $min = $point[$i];
+				if($max === null || $point[$i] > $max) $max = $point[$i];
 				$coords[] = $point[$i];
 
 				//for use in our multisort
@@ -45,9 +48,9 @@ class KDTree
 			$numPointsInDimension = count($coords);
 
 			$node->getHyperRectangle()[$i]= array(
-				'min' => $coords[0],
-				'max' => $coords[$numPointsInDimension - 1]
-				);
+				'min' => $min,
+				'max' => $max
+			);
 		}
 
 
