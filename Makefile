@@ -1,4 +1,4 @@
 test:
-	@./bin/phpunit
+	@./vendor/bin/phpunit
 
 .PHONY: test
