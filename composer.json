@@ -1,13 +1,15 @@
 {
     "name": "sandfox/kdtree",
     "description": "A slow and possibly buggy implementation of a kdtree in php",
+    "homepage": "https://github.com/sandfox/kdtree",
     "support": {
         "issues" : "https://github.com/sandfox/kdtree/issues"
     },
     "license": "MIT",
+    "keywords" : ["geospatial", "bsp", "kdtree"],
     "type": "library",
     "require" : {
-        "php" : ">5.4.0"
+        "php" : ">=5.4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
@@ -19,7 +21,7 @@
         {
             "name": "James Butler",
             "email": "james.butler@sandfox.co.uk",
-            "homepage" : "http://blog.sandfox.co.uk"
+            "homepage" : "http://sandfox.co.uk"
         }
     ],
     "autoload" : {
