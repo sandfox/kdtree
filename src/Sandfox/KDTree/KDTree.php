@@ -18,7 +18,7 @@ class KDTree
 	static public function build(array $points, $depth = 0, $maxdepth = 1000)
 	{
 		if($depth > $maxdepth) {
-			throw new OverflowException("Depth exceeded maximum of " + $maxdepth + ". Check for exact duplicate points, which cause infinite recursion, or specify the optional maxdepth argument.");
+			throw new \OverflowException("Depth exceeded maximum of " . $maxdepth . ". Check for exact duplicate points, which cause infinite recursion, or specify the optional maxdepth argument.");
 		}
 
 		//Can't build add a node with no points
