@@ -14,4 +14,4 @@ matrix:
 before_script:
         - composer --dev install
 
-script: bin/phpunit
+script: vendor/bin/phpunit
