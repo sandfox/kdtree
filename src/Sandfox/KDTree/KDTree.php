@@ -118,7 +118,7 @@ class KDTree
 
 		if($oppositeNode) {
 
-			$tempSearchPoint = new Point();
+			$tempSearchPoint = new Point($numDimensions);
 
 			for($i = 0; $i < $numDimensions; $i++) {
 

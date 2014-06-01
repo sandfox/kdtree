@@ -16,7 +16,7 @@ function generatePoints($totalPoints, $numDimensions = 2, $yFactor = 2)
 
 	for($i = 0; $i < $totalPoints; $i++) {
 
-		$point = new Sandfox\KDTree\Point;
+		$point = new Sandfox\KDTree\Point($numDimensions);
 
 		for($n = 0; $n < $numDimensions; $n++) {
 			$point[$n] = mt_rand($min, $max);

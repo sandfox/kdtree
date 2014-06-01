@@ -23,7 +23,8 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 
 		foreach($this->pointsData as $pointData){
 
-			$point = new KDTree\Point;
+			$dimensions = count($pointData);
+			$point = new KDTree\Point($dimensions);
 
 			for($n = 0; $n < count($pointData); $n++) {
 				$point[$n] = $pointData[$n];
@@ -49,7 +50,9 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testSearchNearestNeighbour($tree)
 	{
-		$highPoint = new KDTree\Point;
+		$dimensions = 3;
+
+		$highPoint = new KDTree\Point($dimensions);
 
 		$highPoint[] = 6;
 		$highPoint[] = 6;
@@ -63,7 +66,7 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals($highNearest['data']->getPoint(), $this->points[4]);
 
-		$lowPoint = new KDTree\Point;
+		$lowPoint = new KDTree\Point($dimensions);
 
 		$lowPoint[] = -1;
 		$lowPoint[] = -1;
@@ -80,11 +83,14 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 	}
 
 	public function testBuildKDTreeMovesAllMedianPointsIntoHyperRectangle() {
-		$lowPoint = new KDTree\Point;
-		$midlowPoint = new KDTree\Point;
-		$midmidPoint = new KDTree\Point;
-		$midhighPoint = new KDTree\Point;
-		$highPoint = new KDTree\Point;
+
+		$dimensions = 2;
+
+		$lowPoint = new KDTree\Point($dimensions);
+		$midlowPoint = new KDTree\Point($dimensions);
+		$midmidPoint = new KDTree\Point($dimensions);
+		$midhighPoint = new KDTree\Point($dimensions);
+		$highPoint = new KDTree\Point($dimensions);
 
 		$lowPoint[] = 1;
 		$midlowPoint[] = 2;
@@ -155,7 +161,9 @@ class KDTreeTest extends \PHPUnit_Framework_TestCase
 	public function runNNSearch($searchCoords, $expectedIndex) {
 		$this->setUp();
 
-		$searcher = new KDTree\Point;
+		$dimensions = count($searchCoords);
+
+		$searcher = new KDTree\Point($dimensions);
 		foreach($searchCoords as $dimval) $searcher[] = $dimval;
 
 		$tree = KDTree\KDTree::build($this->points);
