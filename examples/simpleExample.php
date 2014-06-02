@@ -44,7 +44,7 @@ if($myTree === null) {
 
 
 
-$originPoint = new KDTree\Point();
+$originPoint = new KDTree\Point(2);
 
 $originPoint[] = 0;
 $originPoint[] = 30;
