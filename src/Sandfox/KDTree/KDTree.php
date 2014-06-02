@@ -15,8 +15,11 @@ class KDTree
 	 * @param  integer $depth  Used by this function recursively, don't set yourself
 	 * @return Sandfox\KDTree\Node          [description]
 	 */
-	static public function build(array $points, $depth = 0)
+	static public function build(array $points, $depth = 0, $maxdepth = 1000)
 	{
+		if($depth > $maxdepth) {
+			throw new \OverflowException("Depth exceeded maximum of " . $maxdepth . ". Check for exact duplicate points, which cause infinite recursion, or specify the optional maxdepth argument.");
+		}
 
 		//Can't build add a node with no points
 		if(empty($points)) {
@@ -31,9 +34,12 @@ class KDTree
 
 		//ugly but high perfomance array sort - usort is cleaner for small number of points
 		for($i = 0; $i < $numDimensions; $i++) {
+			$min = null; $max = null;
 
 			$coords = array();
 			foreach ($points as $point) {
+				if($min === null || $point[$i] < $min) $min = $point[$i];
+				if($max === null || $point[$i] > $max) $max = $point[$i];
 				$coords[] = $point[$i];
 
 				//for use in our multisort
@@ -45,28 +51,28 @@ class KDTree
 			$numPointsInDimension = count($coords);
 
 			$node->getHyperRectangle()[$i]= array(
-				'min' => $coords[0],
-				'max' => $coords[$numPointsInDimension - 1]
-				);
+				'min' => $min,
+				'max' => $max
+			);
 		}
 
 
 		array_multisort($sortCoords, SORT_ASC, $points);
 
-
-
-		$median = count($points) / 2;
-
+		$median = floor(count($points) / 2); // bitshift for fast division
+		while($median > 0 && $sortCoords[$median] == $sortCoords[$median - 1]) {
+			$median--;
+		}
 
 		$node->setPoint($points[$median]);
 
 
 		//lets split the array in half
-		$leftArray = array_slice($points, 0, $median -1);
+		$leftArray = array_slice($points, 0, $median);
 		$rightArray= array_slice($points, $median +1, null);
 
-		$node->setLeftChild(self::build($leftArray, $depth+1));
-		$node->setRightChild(self::build($rightArray, $depth+1));
+		$node->setLeftChild(self::build($leftArray, $depth+1, $maxdepth));
+		$node->setRightChild(self::build($rightArray, $depth+1, $maxdepth));
 
 		return $node;
 
@@ -82,7 +88,7 @@ class KDTree
 	 */
 	static public function nearestNeighbour(Node $node, Point $originPoint, SearchResults $results, $depth = 0)
 	{
-		$numDimensions = count($originPoint);
+		$numDimensions = $originPoint->getNumDimensions();
 
 		$axis = $depth % $numDimensions;
 
@@ -119,10 +125,12 @@ class KDTree
 				if($i == $axis) {
 					$tempSearchPoint[$i] = $node->getPoint()[$i];
 				} else {
-					if($originPoint[$i] < $oppositeNode->getHyperRectangle()[$i]['min']) {
+					if($originPoint[$i] <= $oppositeNode->getHyperRectangle()[$i]['min']) {
 						$tempSearchPoint[$i] = $oppositeNode->getHyperRectangle()[$i]['min'];
 					}
 					elseif($originPoint[$i] < $oppositeNode->getHyperRectangle()[$i]['max']) {
+						$tempSearchPoint[$i] = $originPoint[$i];
+					} else {
 						$tempSearchPoint[$i] = $oppositeNode->getHyperRectangle()[$i]['max'];
 					}
 				}
