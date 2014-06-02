@@ -13,9 +13,21 @@ Now uses a bounded SPL priority queue for results making things daftly faster wh
 ## Installation
 
 
-As this is the 21st century please use composer to install this
+As this is the 21st century please use Composer to install this
+
+
 ```bash
 composer install sandfox/kdtree
+```
+
+or create a composer.json file and run the composer install command to install it:
+
+```json
+{
+    "require": {
+        "sandfox/kdtree": "~1.0"
+    }
+}
 ```
 
 ## Usage
