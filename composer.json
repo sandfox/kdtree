@@ -22,6 +22,11 @@
             "name": "James Butler",
             "email": "james.butler@sandfox.co.uk",
             "homepage" : "http://sandfox.co.uk"
+        },
+        {
+            "name": "Michael Fairhurst",
+            "email": "michaelrfairhurst@gmail.com",
+            "homepage" : "http://wakelang.com"
         }
     ],
     "autoload" : {
